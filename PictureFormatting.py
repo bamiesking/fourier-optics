@@ -16,4 +16,8 @@ def PicArray(make_array, x, name):
         im.show()
 
 
+def takePic(filename):
+    image = Image.open(filename)
+    return image
+
 

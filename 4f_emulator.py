@@ -1,6 +1,4 @@
 import numpy
-
-
 class Emulator():
     # Class takes discrete 2D input field i (nxn numpy array), and 2D aperture function in Fourier plane f
     def __init__(self, i, f):
