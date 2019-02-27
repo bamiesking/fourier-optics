@@ -1,3 +1,5 @@
 test*
 __init__.py
 *.pyc
+.DS_Store
+*.tif

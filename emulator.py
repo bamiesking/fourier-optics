@@ -8,7 +8,6 @@ class Emulator():
         self.fourier_aperture = f
 
         # Determine field incident on Fourier plane
-        #TODO: Split fourier transform output into quarters, rotate each by 180 deg, recombine to get corrected fourier field
         self.fourier_field = numpy.fft.fft2(self.input_field, norm='ortho')
         self.fourier_transmission = self.fourier_field * self.fourier_aperture
         self.output_field = numpy.fft.fftn(self.fourier_transmission, norm='ortho')
