@@ -27,13 +27,13 @@ def opaque_circle(R):
 def grating(d, t):
     if t %((np.pi)/2) == 0:
         b = np.full((x, y), 0.)
-        for i in range(0, x, int(x / d)):
-            b[:, i] = np.full((x), 1.0)
+        for i in range(0, y, int(y / d)):
+            b[:, i] = np.full((y), 1.0)
         return b
     elif t%(np.pi) == 0:
         b = np.full((x, y), 0.)
-        for i in range(0, y, int(y / d)):
-            b[i,:] = np.ones((y),1.0)
+        for i in range(0, x, int(x / d)):
+            b[i,:] = np.ones((x),1.0)
         return b
     elif t%((np.pi/2)/2) != 0 and t%(np.pi) != 0:
         b = np.zeros((x,y))
@@ -41,6 +41,7 @@ def grating(d, t):
             for j in range(0,y,int((y/d)*np.sin(t))):
                 b[i,j] = 1.0
         return b
+
 def ones():
     return np.full((x,y), 1.0)
 
