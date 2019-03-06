@@ -18,7 +18,7 @@ class Emulator():
         output_image = Image.fromarray(np.abs(output_field))
 
         #  Transform Fourier plane image to represent proper field
-        fourier_image = Image.fromarray(np.abs(fourier_transmission))
+        fourier_image = rotate_quarters(Image.fromarray(np.abs(fourier_transmission)*256))
 
         # Create accessible array of images
         self.images = {'i': input_image, 'f': fourier_image, 'o': output_image}
@@ -27,16 +27,16 @@ class Emulator():
 def rotate_quarters(image):
     """Splits a PIL image into quarters, rotates each quarter by 180 degrees, and recombines them."""
     w, h = image.size
-    quarters = [image.crop((0, 0, int(w / 2), int(h / 2))),
-                image.crop((int(w / 2), 0, int(w), int(h / 2))),
-                image.crop((0, int(h / 2), int(w / 2), int(h))),
-                image.crop((int(w / 2), int(h / 2), int(w), int(h)))]
+    quarters = [image.crop((0, 0, int(w / 2)+1, int(h / 2)+1)),
+                image.crop((int(w / 2)+1, 0, int(w), int(h / 2)+1)),
+                image.crop((0, int(h / 2)+1, int(w / 2)+1, int(h))),
+                image.crop((int(w / 2)+1, int(h / 2)+1, int(w), int(h)))]
 
     for i in range(0, 4):
         quarters[i] = quarters[i].rotate(180)
 
-    image.paste(quarters[0], (0, 0, int(w / 2), int(h / 2)))
-    image.paste(quarters[1], (int(w / 2), 0, int(w), int(h / 2)))
-    image.paste(quarters[2], (0, int(h / 2), int(w / 2), int(h)))
-    image.paste(quarters[3], (int(w / 2), int(h / 2), int(w), int(h)))
+    image.paste(quarters[0], (0, 0, int(w / 2)+1, int(h / 2)+1))
+    image.paste(quarters[1], (int(w / 2+1), 0, int(w), int(h / 2)+1))
+    image.paste(quarters[2], (0, int(h / 2)+1, int(w / 2)+1, int(h)))
+    image.paste(quarters[3], (int(w / 2)+1, int(h / 2)+1, int(w), int(h)))
     return image
