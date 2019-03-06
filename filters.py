@@ -28,21 +28,21 @@ def grating(d, t):
     if t %((np.pi)/2) == 0:
         b = np.full((x, y), 0)
         for i in range(0, x, int(x / d)):
-            b[:, i] = np.ones((x))
+            b[:, i] = np.full((x), 1.0)
         return b
     elif t%(np.pi) == 0:
         b = np.full((x, y), 0)
         for i in range(0, y, int(y / d)):
-            b[i,:] = np.ones((y))
+            b[i,:] = np.ones((y),1.0)
         return b
     elif t%((np.pi/2)/2) != 0 and t%(np.pi) != 0:
         b = np.zeros((x,y))
         for i in range(0, x, int((x/d)*np.cos(t))):
             for j in range(0,y,int((y/d)*np.sin(t))):
-                b[i,j] = 1
+                b[i,j] = 1.0
         return b
 def ones():
-    return np.full((x,y), 1)
+    return np.full((x,y), 1.0)
 
 
 if __name__ == '__main__':
