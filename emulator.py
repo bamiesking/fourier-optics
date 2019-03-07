@@ -18,7 +18,7 @@ class Emulator():
         output_image = Image.fromarray(np.abs(output_field))
 
         #  Transform Fourier plane image to represent proper field
-        fourier_image = rotate_quarters(Image.fromarray(np.abs(fourier_transmission)*256))
+        fourier_image = rotate_quarters(Image.fromarray(np.abs(fourier_transmission)))
 
         # Create accessible array of images
         self.images = {'i': input_image, 'f': fourier_image, 'o': output_image}
