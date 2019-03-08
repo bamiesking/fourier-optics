@@ -56,5 +56,5 @@ def grating(d, t):
 def uniform(a):
     """Returns a uniform filter with transparency |a| in [0,1]. If |a|>1, uses |a|=1."""
     a = np.abs(a)
-    return np.full((x, y), min(a, 1))
+    return np.full((x, y), min(a, 1), dtype=float)
 
