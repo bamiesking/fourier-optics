@@ -1,12 +1,12 @@
 import numpy as np
 from PIL import Image
-
+from fourier_optics.filters import uniform
 
 class Emulator():
     """Initialised with a PIL Image describing the field in the input plane, and a numpy array describing the aperture function/pupil function in the Fourier plane.
 
     Produces PIL images representing field in Fourier plane and in output plane."""
-    def __init__(self, i, f):
+    def __init__(self, i, f=uniform(1)):
         input_image = Image.open(i).convert(mode='L')
         fourier_aperture = np.array(rotate_quarters(Image.fromarray(f)))
 
