@@ -1,47 +1,60 @@
 import numpy as np
+from PIL import Image
 
 
 # Set dimensions of array to be equal to pixels of CCD images
 y, x = 1280, 1024
 
 
-# Define small transparent circular filter
+# SPACIAL FREQUENCY FILTERS
 def transparent_circle(r):
+    """Returns a transparent circular aperture of radius r in pixels"""
     a = np.zeros((x, y))
     for i in range(0, x):
         for j in range(0, y):
             R = np.sqrt(np.abs(x/2 - i)**2 + np.abs(y/2 - j)**2)
             if R <= r:
                 a[i, j] = 1
-    print(a.max())
     return a
 
 
-# Define small opaque circular filter as complement of small transparent circular filter
 def opaque_circle(r):
+    """Returns the complementary filter of transparent_circle: a small opaque circle of radius r pixels."""
     return np.full((x, y), 1) - transparent_circle(r)
 
 
+# APODIZING FILTERS
+def cosine_window(r, n):
+    """Returns the nth-order cosine window of radius r in pixels."""
+    a = np.zeros((x, y))
+    for i in range(0, x):
+        for j in range(0, y):
+            R = np.sqrt(np.abs(x/2 - i)**2 + np.abs(y/2 - j)**2)
+            if R <= r:
+                a[i, j] = np.cos(np.pi/2 * R/r)**n
+    return a
+
+
+def sine_window(r, n):
+    """Returns the nth-order sine window of radius r."""
+    return np.full((x, y), 1) - cosine_window(r, n)
+
+
+# COARSE GRATING
 def grating(d, t):
-    if t % np.pi/2 == 0:
-        b = np.full((x, y), 0.)
-        for i in range(0, y, int(y / d)):
-            b[:, i] = np.full(x, 1.0)
-        return b
-    elif t % np.pi == 0:
-        b = np.full((x, y), 0.)
-        for i in range(0, x, int(x / d)):
-            b[i, :] = np.ones(y, 1.0)
-        return b
-    else:
-        b = np.zeros((x, y))
-        for i in range(0, x, int((x/d)*np.cos(t))):
-            for j in range(0, y, int((y/d)*np.sin(t))):
-                b[i, j] = 1.0
-        return b
+    """Returns a vertical coarse grating with slit spacing d pixels, rotated an angle t from the horixontal"""
+    array, n = np.zeros((3*x, 3*y)), 0
+    while n*d < 3*y:
+        array[:, n*d] = np.ones(3*x, float)
+        n += 1
+
+    canvas = Image.fromarray(array)
+    return np.array(canvas.rotate(t).crop((y, x, 2*y, 2*x)))
 
 
-def ones():
-    return np.full((x, y), 1.0)
-
+# UNIFORM FILTER
+def uniform(a):
+    """Returns a uniform filter with transparency |a| in [0,1]. If |a|>1, uses |a|=1."""
+    a = np.abs(a)
+    return np.full((x, y), min(a, 1))
 
