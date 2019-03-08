@@ -24,7 +24,7 @@ def opaque_circle(r):
 
 
 # APODIZING FILTERS
-def cosine_window(r, n):
+def cosine_window(r, n=1):
     """Returns the nth-order cosine window of radius r in pixels."""
     a = np.zeros((x, y))
     for i in range(0, x):
@@ -35,7 +35,7 @@ def cosine_window(r, n):
     return a
 
 
-def sine_window(r, n):
+def sine_window(r, n=1):
     """Returns the nth-order sine window of radius r."""
     return np.full((x, y), 1) - cosine_window(r, n)
 
