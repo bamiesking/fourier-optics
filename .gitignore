@@ -3,3 +3,6 @@ __init__.py
 *.pyc
 .DS_Store
 *.tif
+*.gif
+*.tiff
+*.png
