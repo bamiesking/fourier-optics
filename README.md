@@ -18,3 +18,4 @@ The Fourier plane image is adjusted to couteract the reciprocal relation between
 * `cosine_window(r, n)` which returns the apodizing `n`th order cosine window function of radius `r`.
 * `sine_window(r, n)` which returns the complement of the above.
 * `grating(d, t)` which returns a coarse grating of vertical slits separated uniformly by `d` pixels, rotated through an angle `t` degrees.
+* `uniform(a)` which returns a uniform filter of transparency `0 <= a <= 1`.
