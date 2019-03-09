@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image
-from fourier_optics.filters import uniform
+from filters import uniform
 
 class Emulator():
     """Initialised with a PIL Image describing the field in the input plane, and a numpy array describing the aperture function/pupil function in the Fourier plane.

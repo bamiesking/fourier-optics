@@ -27,12 +27,20 @@ def line_read(a):
 
     return b[int(d[0])]
 
+def residuals(a, b):
+    """this function takes in two arrays: a, the observed image and b, the theoretical prediction.
+    It returns an array of the residuals
+    """
+    return b-a
+
 
 
 pix1_arr = line_read(im1)
 pix2_arr = line_read(im2)
+fig, axes = plt.subplots(2)
 
-plt.plot(pix1_arr, label = 'real image')
-plt.plot(pix2_arr, label = 'theoretical prediction')
+axes[0].plot(pix1_arr, label = 'real image')
+axes[0].plot(pix2_arr, label = 'theoretical prediction')
+axes[1].plot(residuals(pix1_arr, pix2_arr))
 plt.legend()
 plt.show()
