@@ -24,7 +24,8 @@ def line_read(a):
 
     return b[int(d[0])]
 
-
+def shift_image(a, b):
+    """Shifts the image ato match another, with respect to its maxima"""
 def residuals(a, b):
     """this function takes in two arrays: a, the observed image and b, the theoretical prediction.
     It returns an array of the residuals
