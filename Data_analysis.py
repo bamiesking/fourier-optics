@@ -1,6 +1,6 @@
 from PIL import Image
 import numpy as np
-from fourier_optics.emulator import Emulator
+from emulator import Emulator
 import matplotlib.pyplot as plt
 """import scipy.optimize
 import scipy.stats
@@ -25,6 +25,20 @@ def line_read(a):
     return b[int(d[0])]
 
 
+def shift_image(a, b):
+    """Shifts the image ato match another, with respect to its maxima
+    a is the basis image (the picture taken)
+    b is the compared picture (Fourier transform)
+    """
+    a_arr = np.array(a)
+    b_arr = np.array(b)
+    b_roll = np.roll(b_arr, a_arr.argmax() - b_arr.argmax())
+    return b_roll
+
+
+im2_roll = shift_image(im1, im2)
+
+
 def residuals(a, b):
     """this function takes in two arrays: a, the observed image and b, the theoretical prediction.
     It returns an array of the residuals
@@ -32,7 +46,7 @@ def residuals(a, b):
     return b-a
 
 
-data = {'measured': line_read(im1), 'theoretical': line_read(im2)}
+data = {'measured': line_read(im1), 'theoretical': line_read(im2_roll)}
 
 fig, axes = plt.subplots(2)
 
@@ -41,5 +55,4 @@ axes[0].plot(data['theoretical'], label='Theoretical')
 axes[0].legend()
 
 axes[1].plot(residuals(data['measured'], data['theoretical']))
-
 plt.show()
